@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTechCompanyAction } from '../../redux/HomeSlice';
+import { getActiveCompaniesAction, getDetailsAction } from '../../redux/HomeSlice';
 
 const Home = () => {
   const state = useSelector((state) => state);
+  // const { general } = state;
+  console.log('state');
   console.log(state);
+
+
   const dispatch = useDispatch();
   // dispatch(getTechCompanyAction());
 
   useEffect(() => {
-    console.log('aaa');
-    dispatch(getTechCompanyAction());
+    dispatch(getDetailsAction('F'));
+    console.log(state);
   }, []);
 
   return (
