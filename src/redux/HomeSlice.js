@@ -8,12 +8,13 @@ const FILTER = 'stock/FILTER';
 const initialState = {
   companyDetails: [],
   companyList: [],
+  filteredList: [],
   status: null,
 };
 
 const stockReducer = (state = initialState, action) => {
-  console.log('state');
-  console.log(state);
+  // console.log('state');
+  // console.log(state);
   switch (action.type) {
     case `${GET_TECH_COMPANY}/pending`:
       return {
@@ -43,14 +44,16 @@ const stockReducer = (state = initialState, action) => {
       return state;
     case `${FILTER}/fulfilled`:
       return {
-        companyDetails: [...state.companyDetails],
-        companyList: [...state.companyList, state.companyList.filter((company) => company.name.includes(action.payload) || action.payload === '')],
+        ...state,
+        filteredList: state.companyList.filter((company) => company.name.toLowerCase().includes(action.payload) || action.payload === ''),
         status: 'Details fetched successfully',
       };
     default:
       return state;
   }
 };
+
+// companyList.filter((company) => company.name.includes(filter) || filter === '')
 
 // eslint-disable-next-line max-len
 // const filteredCompanyList = companyList.filter((company) => company.name.includes(filter) || filter === '');
