@@ -4,32 +4,40 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getDetailsAction } from '../../redux/HomeSlice';
 import './Company.css';
-import mockState from '../mockState';
 
 const Company = () => {
+  const [currCompany, setCurrCompany] = useState({});
   const [companyProfileComponent, setCompanyProfileComponent] = useState([]);
   const [companyValueComponent, setCompanyValueComponent] = useState([]);
+  const [companyProfile, setCompanyProfile] = useState([]);
   const { name } = useParams();
-
-  // const { companyDetails, companyList } = mockState;
+  console.log(name);
 
   const state = useSelector((state) => state);
+  const { companyDetails, companyList } = state;
 
   const dispatch = useDispatch();
 
-  const { companyDetails, companyList } = state;
   useEffect(() => {
-    if (companyDetails.length === 0) {
-      dispatch(getDetailsAction(name));
-    }
+    dispatch(getDetailsAction(name));
+    console.log(companyDetails);
   }, []);
 
-  const currCompany = companyList.find((company) => company.symbol === name);
-  const companyProfile = {
-    name: currCompany.name,
-    symbol: currCompany.symbol,
-    image: companyDetails.companyLogo,
-  };
+  useEffect(() => {
+    setCurrCompany(companyList.find((company) => company.symbol === name));
+    setCompanyProfile({
+      name: currCompany.name,
+      symbol: currCompany.symbol,
+      image: companyDetails.companyLogo,
+    });
+  }, []);
+  // const currCompany = companyList.find((company) => company.symbol === name);
+
+  // const companyProfile = {
+  //   name: currCompany.name,
+  //   symbol: currCompany.symbol,
+  //   image: companyDetails.companyLogo,
+  // };
 
   useEffect(() => {
     setCompanyProfileComponent((
@@ -44,27 +52,21 @@ const Company = () => {
       </div>
     ));
   }, []);
+
   useEffect(() => {
-    if (state.status === 'Details fetched successfully') {
-      setTimeout(() => {
-        try {
-          setCompanyValueComponent(companyDetails.value.map((metric) => (
-            <div className="valueContainer" key={metric.date}>
-              <span>{`Date: ${metric.date}`}</span>
-              <span>{`Enterprise Value: ${metric.enterpriseValue}`}</span>
-              <span>{`Market Capitalization: ${metric.marketCapitalization}`}</span>
-              <span>{`Stock Price: ${metric.stockPrice}`}</span>
-              <span>{`Add Total Debt: ${metric.addTotalDebt}`}</span>
-              <span>{`Minus Cash And Cash Equivalents: ${metric.minusCashAndCashEquivalents}`}</span>
-              <span>{`Number Of Shares: ${metric.numberOfShares}`}</span>
-            </div>
-          )));
-        } catch (err) {
-          console.log(err.message);
-        }
-      }, 1000);
+    if (companyDetails.value.length > 0) {
+      setCompanyValueComponent(companyDetails.value.map((metric) => (
+        <div className="valueContainer" key={metric.date}>
+          <span>{`Date: ${metric.date}`}</span>
+          <span>{`Enterprise Value: ${metric.enterpriseValue}`}</span>
+          <span>{`Market Capitalization: ${metric.marketCapitalization}`}</span>
+          <span>{`Stock Price: ${metric.stockPrice}`}</span>
+          <span>{`Add Total Debt: ${metric.addTotalDebt}`}</span>
+          <span>{`Minus Cash And Cash Equivalents: ${metric.minusCashAndCashEquivalents}`}</span>
+          <span>{`Number Of Shares: ${metric.numberOfShares}`}</span>
+        </div>
+      )));
     }
-    console.log(companyProfileComponent);
   }, []);
 
   return (

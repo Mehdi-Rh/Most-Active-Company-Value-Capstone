@@ -14,11 +14,6 @@ const Home = () => {
   const state = useSelector((state) => state);
   const [filter, setFilter] = useState('');
   const { companyList, filteredList } = state;
-  console.log('companyList');
-  console.log(companyList);
-  console.log('filteredList');
-  console.log(filteredList);
-
   const companyListShow = filteredList || companyList;
   const dispatch = useDispatch();
 

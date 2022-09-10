@@ -64,7 +64,7 @@ const stockReducer = (state = initialState, action) => {
 const fetchActiveCompanies = async () => {
   const baseUrl = 'https://financialmodelingprep.com/api/v3/';
   const endpoint = 'stock_market/actives?apikey=';
-  const apiKey = 'd38e7160b14b35d4a74c33d9db00cc42';
+  const apiKey = 'cb15801fb62c21c21bc75b0b46425ad2';
   const urlGeneral = baseUrl + endpoint + apiKey;
   const companyGeneral = [];
   let general = await fetch(urlGeneral);
@@ -85,7 +85,7 @@ const fetchActiveCompanies = async () => {
 
 const fetchProfile = async (symbol) => {
   const baseUrl = 'https://financialmodelingprep.com/api/v3/';
-  const apiKey = 'd38e7160b14b35d4a74c33d9db00cc42';
+  const apiKey = 'cb15801fb62c21c21bc75b0b46425ad2';
   const profileEndpoint = `profile/${symbol}?limit=40&apikey=`;
   const urlProfile = baseUrl + profileEndpoint + apiKey;
   let profile = await fetch(urlProfile);
@@ -95,7 +95,7 @@ const fetchProfile = async (symbol) => {
 
 const fetchValue = async (symbol) => {
   const baseUrl = 'https://financialmodelingprep.com/api/v3/';
-  const apiKey = 'd38e7160b14b35d4a74c33d9db00cc42';
+  const apiKey = 'cb15801fb62c21c21bc75b0b46425ad2';
   const valueEndpoint = `enterprise-values/${symbol}?limit=40&apikey=`;
   const urlValue = baseUrl + valueEndpoint + apiKey;
   let value = await fetch(urlValue);
@@ -104,14 +104,11 @@ const fetchValue = async (symbol) => {
 };
 
 export const getDetailsAction = createAsyncThunk(GET_DETAILS, async (symbol) => {
-  try {
-    const profile = await fetchProfile(symbol);
-    const value = await fetchValue(symbol);
-    const companyLogo = profile[0].image;
-    return { companyLogo, value };
-  } catch (err) {
-    return console.log(err.message);
-  }
+  const profile = await fetchProfile(symbol);
+  const value = await fetchValue(symbol);
+  const companyLogo = profile[0].image;
+  console.log({ companyLogo, value });
+  return { companyLogo, value };
 });
 
 export const getActiveCompaniesAction = createAsyncThunk(
