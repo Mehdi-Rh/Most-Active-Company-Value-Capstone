@@ -1,0 +1,26 @@
+.profile {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1.5rem;
+}
+
+.profileName {
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  font-size: x-large;
+}
+
+.valueContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 1.5rem;
+}
+
+.valueContainer:nth-child(odd) {
+  background: var(--bl);
+}
+
+.valueContainer:nth-child(even) {
+  background: var(--blDark);
+}

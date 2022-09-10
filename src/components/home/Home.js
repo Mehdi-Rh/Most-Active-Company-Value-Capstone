@@ -1,24 +1,33 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
 import { useSelector, useDispatch } from 'react-redux';
-import { getActiveCompaniesAction, getDetailsAction } from '../../redux/HomeSlice';
+// eslint-disable-next-line no-unused-vars
+import { getActiveCompaniesAction } from '../../redux/HomeSlice';
+import CompanyCard from './CompanyCard';
+import './Home.css';
+// import mockState from '../mockState';
 
 const Home = () => {
+  // const { companyList } = mockState;
+
   const state = useSelector((state) => state);
-  // const { general } = state;
-  console.log('state');
-  console.log(state);
-
-
+  const { companyList } = state;
   const dispatch = useDispatch();
-  // dispatch(getTechCompanyAction());
 
   useEffect(() => {
-    dispatch(getDetailsAction('F'));
-    console.log(state);
+    dispatch(getActiveCompaniesAction());
   }, []);
 
   return (
-    <div>Home</div>
+    <div>
+      <h1>Most active companies</h1>
+      <div id="companiesContainer">
+        {companyList.map((company) => (
+          <CompanyCard key={company.symbol} company={company} />
+        ))}
+      </div>
+    </div>
   );
 };
 

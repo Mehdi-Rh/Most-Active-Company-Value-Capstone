@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 // import { Container } from 'react-bootstrap';
 import Home from './components/home/Home';
-import Item from './components/item/Item';
+import Company from './components/item/Company';
 import './App.css';
 
 // const App = () => {
@@ -31,7 +31,7 @@ const App = () => (
   <div className="App">
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/item" element={<Item />} />
+      <Route path="/company/:name" element={<Company />} />
     </Routes>
   </div>
 );
