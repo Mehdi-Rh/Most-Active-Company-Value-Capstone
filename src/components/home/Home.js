@@ -1,29 +1,30 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useEffect } from 'react';
-// eslint-disable-next-line no-unused-vars
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// eslint-disable-next-line no-unused-vars
-import { getActiveCompaniesAction } from '../../redux/HomeSlice';
+import { getActiveCompaniesAction, filterCompanyAction } from '../../redux/HomeSlice';
 import CompanyCard from './CompanyCard';
+import FilterInput from './FilterInput';
 import './Home.css';
-// import mockState from '../mockState';
 
 const Home = () => {
-  // const { companyList } = mockState;
-
   const state = useSelector((state) => state);
-  const { companyList } = state;
+  const [filter, setFilter] = useState('');
+  const { companyList, filteredList } = state;
+  const companyListShow = filteredList || companyList;
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getActiveCompaniesAction());
   }, []);
 
+  useEffect(() => {
+    dispatch(filterCompanyAction(filter));
+  }, [filter]);
+
   return (
     <div>
-      <h1>Most active companies</h1>
+      <FilterInput setFilter={setFilter} />
       <div id="companiesContainer">
-        {companyList.map((company) => (
+        {companyListShow.map((company) => (
           <CompanyCard key={company.symbol} company={company} />
         ))}
       </div>
