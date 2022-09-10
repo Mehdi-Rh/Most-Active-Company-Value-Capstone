@@ -14,11 +14,15 @@ const Company = () => {
   // const { companyDetails, companyList } = mockState;
 
   const state = useSelector((state) => state);
+  console.log('state');
+  console.log(state.status);
   const dispatch = useDispatch();
 
   const { companyDetails, companyList } = state;
   useEffect(() => {
-    dispatch(getDetailsAction(name));
+    if (companyDetails.length === 0) {
+      dispatch(getDetailsAction(name));
+    }
   }, []);
 
   const currCompany = companyList.find((company) => company.symbol === name);
@@ -28,17 +32,6 @@ const Company = () => {
     image: companyDetails.companyLogo,
   };
 
-  // const companyProfileComponent = (
-  //   <div className="profile">
-  //     <div className="profileName">
-  //       <span>{companyProfile.name}</span>
-  //       <span>{companyProfile.symbol}</span>
-  //     </div>
-  //     <div>
-  //       <img src={companyProfile.image} alt="Logo" />
-  //     </div>
-  //   </div>
-  // );
   useEffect(() => {
     setCompanyProfileComponent((
       <div className="profile">
@@ -53,31 +46,26 @@ const Company = () => {
     ));
   }, []);
   useEffect(() => {
-    setCompanyValueComponent(companyDetails.value.map((metric) => (
-      <div className="valueContainer" key={metric.date}>
-        <span>{`Date: ${metric.date}`}</span>
-        <span>{`Enterprise Value: ${metric.enterpriseValue}`}</span>
-        <span>{`Market Capitalization: ${metric.marketCapitalization}`}</span>
-        <span>{`Stock Price: ${metric.stockPrice}`}</span>
-        <span>{`Add Total Debt: ${metric.addTotalDebt}`}</span>
-        <span>{`Minus Cash And Cash Equivalents: ${metric.minusCashAndCashEquivalents}`}</span>
-        <span>{`Number Of Shares: ${metric.numberOfShares}`}</span>
-      </div>
-    )));
+    if (state.status === 'Details fetched successfully') {
+      setTimeout(() => {
+        try {
+          setCompanyValueComponent(companyDetails.value.map((metric) => (
+            <div className="valueContainer" key={metric.date}>
+              <span>{`Date: ${metric.date}`}</span>
+              <span>{`Enterprise Value: ${metric.enterpriseValue}`}</span>
+              <span>{`Market Capitalization: ${metric.marketCapitalization}`}</span>
+              <span>{`Stock Price: ${metric.stockPrice}`}</span>
+              <span>{`Add Total Debt: ${metric.addTotalDebt}`}</span>
+              <span>{`Minus Cash And Cash Equivalents: ${metric.minusCashAndCashEquivalents}`}</span>
+              <span>{`Number Of Shares: ${metric.numberOfShares}`}</span>
+            </div>
+          )));
+        } catch (err) {
+          console.log(err.message);
+        }
+      }, 2000);
+    }
   }, []);
-  // const companyValueComponent = (companyDetails.value.map((metric) => (
-  //   <div className="valueContainer" key={metric.date}>
-  //     <span>{`Date: ${metric.date}`}</span>
-  //     <span>{`Enterprise Value: ${metric.enterpriseValue}`}</span>
-  //     <span>{`Market Capitalization: ${metric.marketCapitalization}`}</span>
-  //     <span>{`Stock Price: ${metric.stockPrice}`}</span>
-  //     <span>{`Add Total Debt: ${metric.addTotalDebt}`}</span>
-  //     <span>{`Minus Cash And Cash Equivalents: ${metric.minusCashAndCashEquivalents}`}</span>
-  //     <span>{`Number Of Shares: ${metric.numberOfShares}`}</span>
-  //   </div>
-  // )) || []);
-  console.log('companyValueComponent');
-  console.log(companyValueComponent);
 
   return (
     <div>
