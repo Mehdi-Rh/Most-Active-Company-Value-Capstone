@@ -1,14 +1,9 @@
-/* eslint-disable no-unused-vars */
-// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
-// eslint-disable-next-line no-unused-vars
 import { useSelector, useDispatch } from 'react-redux';
-// eslint-disable-next-line no-unused-vars
 import { getActiveCompaniesAction, filterCompanyAction } from '../../redux/HomeSlice';
 import CompanyCard from './CompanyCard';
 import FilterInput from './FilterInput';
 import './Home.css';
-// import mockState from '../mockState';
 
 const Home = () => {
   const state = useSelector((state) => state);

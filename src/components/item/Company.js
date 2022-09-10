@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -11,7 +10,6 @@ const Company = () => {
   const [companyValueComponent, setCompanyValueComponent] = useState([]);
   const [companyProfile, setCompanyProfile] = useState([]);
   const { name } = useParams();
-  console.log(name);
 
   const state = useSelector((state) => state);
   const { companyDetails, companyList } = state;
@@ -20,7 +18,6 @@ const Company = () => {
 
   useEffect(() => {
     dispatch(getDetailsAction(name));
-    console.log(companyDetails);
   }, []);
 
   useEffect(() => {
@@ -31,13 +28,6 @@ const Company = () => {
       image: companyDetails.companyLogo,
     });
   }, []);
-  // const currCompany = companyList.find((company) => company.symbol === name);
-
-  // const companyProfile = {
-  //   name: currCompany.name,
-  //   symbol: currCompany.symbol,
-  //   image: companyDetails.companyLogo,
-  // };
 
   useEffect(() => {
     setCompanyProfileComponent((
