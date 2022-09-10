@@ -21,7 +21,10 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    console.log(filter);
     dispatch(filterCompanyAction(filter));
+    console.log('state');
+    console.log(state);
   }, [filter]);
 
   return (

@@ -12,8 +12,8 @@ const initialState = {
 };
 
 const stockReducer = (state = initialState, action) => {
-  console.log('action');
-  console.log(action);
+  console.log('state');
+  console.log(state);
   switch (action.type) {
     case `${GET_TECH_COMPANY}/pending`:
       return {

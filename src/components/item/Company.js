@@ -14,8 +14,7 @@ const Company = () => {
   // const { companyDetails, companyList } = mockState;
 
   const state = useSelector((state) => state);
-  console.log('state');
-  console.log(state.status);
+
   const dispatch = useDispatch();
 
   const { companyDetails, companyList } = state;
@@ -63,8 +62,9 @@ const Company = () => {
         } catch (err) {
           console.log(err.message);
         }
-      }, 2000);
+      }, 1000);
     }
+    console.log(companyProfileComponent);
   }, []);
 
   return (
